@@ -48,9 +48,12 @@ func TestCopyExecuteCmd(t *testing.T) {
 			cmd: &instructions.CopyCommand{
 				SourcesAndDest: instructions.SourcesAndDest{
 					SourcesAndDest:      test.SourcesAndDest,
+				},
 			},
 		}
 		err := cmd.ExecuteCommand(cfg, nil)
-		testutil.CheckErrorAndDeepEqual(t, false, err, test.expectedDest, cfg.WorkingDir)
+		dest := test.SourcesAndDest[len(test.SourcesAndDest)-1]
+		dirlist := ioutil.ReadDir(dest)
+		testutil.CheckErrorAndDeepEqual(t, false, err, test.expectedDest, dirlist)
 	}
 }
